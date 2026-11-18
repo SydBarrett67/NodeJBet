@@ -1,3 +1,25 @@
 body {
-    background-color: rgb(15,5,5);
+    background: linear-gradient(
+        to left,
+        #768987,
+        #627371 50%,
+        #505d5c 75%,
+        #768787 100%
+    );
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+}
+#form {
+    width: 25%; 
+    min-width: 280px;  
+    padding: 30px; 
+    background-color: #969997;
+    border-radius: 10px; 
+    border: 1px solid white;
+    color: white; 
+    box-sizing: border-box; 
 }
