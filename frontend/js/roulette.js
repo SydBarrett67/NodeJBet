@@ -15,15 +15,12 @@ let balance = 0;
 let selectedBet = null;
 let currentBet = null;
 let gamePhase = 'betting';
-let currentMultiplier = 2;
-
-const RED_NUMBERS = [
-    1, 3, 5, 7, 9, 12, 14, 16, 18,
-    19, 21, 23, 25, 27, 30, 32, 34, 36
-];
+let currentRoundId = null;
 
 const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-const socket = new WebSocket(`${protocol}//${location.host}/roulette-ws`);
+const socket = new WebSocket(
+    `${protocol}//${location.host}/roulette-ws`
+);
 
 function formatCredits(value) {
     return Number(value).toLocaleString('it-IT');
@@ -31,7 +28,8 @@ function formatCredits(value) {
 
 function send(action, data = {}) {
     if (socket.readyState !== WebSocket.OPEN) {
-        messageElement.textContent = 'Connessione al server non disponibile.';
+        messageElement.textContent =
+            'Connessione al server non disponibile.';
         return;
     }
 
@@ -63,6 +61,7 @@ function getMultiplier(selection) {
 
 socket.addEventListener('open', () => {
     send('state');
+    updateControls();
 });
 
 socket.addEventListener('message', event => {
@@ -99,13 +98,26 @@ socket.addEventListener('message', event => {
 
 socket.addEventListener('close', () => {
     statusElement.textContent = 'Disconnesso';
-    messageElement.textContent = 'Connessione persa. Ricarica la pagina.';
+    messageElement.textContent =
+        'Connessione persa. Ricarica la pagina.';
     playButton.disabled = true;
 });
 
 function updateGame(state) {
+    // Nuovo round: la vecchia puntata non deve bloccare il giocatore.
+    if (
+        currentRoundId !== null &&
+        state.roundId !== currentRoundId
+    ) {
+        currentBet = null;
+        updateBet();
+    }
+
+    currentRoundId = state.roundId;
     gamePhase = state.phase;
-    countdownElement.textContent = Math.ceil(state.remainingTime / 1000);
+
+    countdownElement.textContent =
+        Math.ceil(state.remainingTime / 1000);
 
     if (state.phase === 'betting') {
         statusElement.textContent = 'Puntate aperte';
@@ -139,7 +151,8 @@ function updateBet() {
     myBetElement.textContent =
         `${formatCredits(currentBet.amount)} NJ su ${getSelectionLabel(currentBet.selection)}`;
 
-    const potential = currentBet.amount * getMultiplier(currentBet.selection);
+    const potential =
+        currentBet.amount * getMultiplier(currentBet.selection);
 
     if (currentBet.status === 'pending') {
         potentialElement.textContent =
@@ -147,10 +160,12 @@ function updateBet() {
     } else if (currentBet.status === 'won') {
         potentialElement.textContent =
             `Hai vinto ${formatCredits(currentBet.payout)} NJ!`;
+
         messageElement.textContent =
             `Complimenti! Hai vinto ${formatCredits(currentBet.payout)} crediti.`;
-    } else {
+    } else if (currentBet.status === 'lost') {
         potentialElement.textContent = 'Puntata persa';
+        messageElement.textContent = 'Peccato! Hai perso questa puntata.';
     }
 }
 
@@ -162,6 +177,7 @@ function updateControls() {
         socket.readyState === WebSocket.OPEN;
 
     playButton.disabled = !canBet;
+
     playButton.textContent = currentBet
         ? 'Puntata piazzata'
         : gamePhase === 'betting'
@@ -171,7 +187,8 @@ function updateControls() {
 
 function updateHistory(history) {
     if (!history.length) {
-        historyElement.innerHTML = '<span class="muted">Nessun risultato</span>';
+        historyElement.innerHTML =
+            '<span class="muted">Nessun risultato</span>';
         return;
     }
 
@@ -186,7 +203,10 @@ function selectBet(type) {
     selectedBet = { type };
 
     document.querySelectorAll('.roulette-option').forEach(button => {
-        button.classList.toggle('selected', button.dataset.bet === type);
+        button.classList.toggle(
+            'selected',
+            button.dataset.bet === type
+        );
     });
 
     numberInput.value = '';
@@ -195,14 +215,17 @@ function selectBet(type) {
 
 function updatePotential() {
     if (!selectedBet) {
-        potentialElement.textContent = 'Vincita potenziale: 0 NJ';
+        potentialElement.textContent =
+            'Vincita potenziale: 0 NJ';
         return;
     }
 
     const amount = Number(amountInput.value);
+
     if (!Number.isSafeInteger(amount) || amount <= 0) return;
 
     const multiplier = getMultiplier(selectedBet);
+
     potentialElement.textContent =
         `Vincita potenziale: ${formatCredits(amount * multiplier)} NJ`;
 }
@@ -218,8 +241,15 @@ numberInput.addEventListener('input', () => {
 
     const number = Number(numberInput.value);
 
-    if (Number.isInteger(number) && number >= 0 && number <= 36) {
-        selectedBet = { type: 'number', value: number };
+    if (
+        Number.isInteger(number) &&
+        number >= 0 &&
+        number <= 36
+    ) {
+        selectedBet = {
+            type: 'number',
+            value: number
+        };
 
         document.querySelectorAll('.roulette-option').forEach(button => {
             button.classList.remove('selected');
@@ -240,25 +270,40 @@ document.querySelectorAll('[data-amount]').forEach(button => {
 
 playButton.addEventListener('click', () => {
     if (!selectedBet) {
-        messageElement.textContent = 'Seleziona prima una puntata.';
+        messageElement.textContent =
+            'Seleziona prima una puntata.';
         return;
     }
 
     const amount = Number(amountInput.value);
 
     if (!Number.isSafeInteger(amount) || amount <= 0) {
-        messageElement.textContent = 'Inserisci un importo valido.';
+        messageElement.textContent =
+            'Inserisci un importo valido.';
+        return;
+    }
+
+    if (amount > balance) {
+        messageElement.textContent =
+            'Non hai abbastanza crediti.';
         return;
     }
 
     if (selectedBet.type === 'number') {
         const number = Number(selectedBet.value);
 
-        if (!Number.isInteger(number) || number < 0 || number > 36) {
-            messageElement.textContent = 'Scegli un numero da 0 a 36.';
+        if (
+            !Number.isInteger(number) ||
+            number < 0 ||
+            number > 36
+        ) {
+            messageElement.textContent =
+                'Scegli un numero da 0 a 36.';
             return;
         }
     }
+
+    playButton.disabled = true;
 
     send('bet', {
         amount,

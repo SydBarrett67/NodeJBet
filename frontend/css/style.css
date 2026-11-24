@@ -1188,4 +1188,21 @@ footer {
         height: 65px;
     }
 }
+/* Padding delle card dei giochi nella dashboard */
+.dashboard-balance + .section + .section .game-card {
+    padding: 28px;
+}
 
+.dashboard-balance + .section + .section .game-card h3 {
+    margin-top: 18px;
+    margin-bottom: 12px;
+}
+
+.dashboard-balance + .section + .section .game-card p {
+    margin-bottom: 22px;
+    line-height: 1.6;
+}
+
+.dashboard-balance + .section + .section .game-card .btn {
+    display: inline-block;
+}

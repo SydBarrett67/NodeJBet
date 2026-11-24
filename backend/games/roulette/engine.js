@@ -37,7 +37,6 @@ function saveUsers(users) {
 
 function getColor(number) {
     if (number === 0) return 'green';
-
     return RED_NUMBERS.includes(number) ? 'red' : 'black';
 }
 
@@ -45,23 +44,17 @@ function isWinningBet(selection, number) {
     switch (selection.type) {
         case 'number':
             return Number(selection.value) === number;
-
         case 'red':
         case 'black':
             return getColor(number) === selection.type;
-
         case 'even':
             return number !== 0 && number % 2 === 0;
-
         case 'odd':
             return number !== 0 && number % 2 === 1;
-
         case 'low':
             return number >= 1 && number <= 18;
-
         case 'high':
             return number >= 19 && number <= 36;
-
         default:
             return false;
     }
@@ -99,7 +92,9 @@ function createRouletteEngine(sendToAll, sendToUser) {
     }
 
     function sendBalance(userId) {
-        const user = getUsers().find(u => u.id === userId);
+        const user = getUsers().find(
+            u => String(u.id) === String(userId)
+        );
 
         if (user) {
             sendToUser(userId, {
@@ -135,28 +130,40 @@ function createRouletteEngine(sendToAll, sendToUser) {
     }
 
     function startRound() {
+        // Comunica ai giocatori che la vecchia puntata è terminata.
+        for (const userId of bets.keys()) {
+            sendToUser(userId, {
+                type: 'bet',
+                bet: null
+            });
+        }
+
+        bets.clear();
+
         roundId++;
         phase = 'betting';
         result = null;
         phaseStarted = Date.now();
 
-        bets.clear();
-
         broadcast();
     }
 
     function spin() {
+        if (phase !== 'betting') return;
+
         phase = 'spinning';
         phaseStarted = Date.now();
 
-        // Estrazione casuale eseguita esclusivamente dal server.
+        // Estrazione casuale sul server.
         result = crypto.randomInt(0, 37);
 
-        for (const [userId, bet] of bets.entries()) {
-            const won = isWinningBet(bet.selection, result);
+        let usersChanged = false;
+        const users = getUsers();
 
-            const users = getUsers();
-            const user = users.find(u => u.id === userId);
+        for (const [userId, bet] of bets.entries()) {
+            const user = users.find(
+                u => String(u.id) === String(userId)
+            );
 
             if (!user) {
                 bet.status = 'lost';
@@ -165,10 +172,12 @@ function createRouletteEngine(sendToAll, sendToUser) {
                 continue;
             }
 
-            // Aggiornamento statistiche: una partita per puntata.
+            const won = isWinningBet(bet.selection, result);
+
             user.gamesPlayed = (user.gamesPlayed || 0) + 1;
 
             if (won) {
+                // Il payout comprende anche la restituzione della puntata.
                 const payout = bet.amount * getMultiplier(bet.selection);
 
                 user.balance = (user.balance || 0) + payout;
@@ -181,9 +190,16 @@ function createRouletteEngine(sendToAll, sendToUser) {
                 bet.payout = 0;
             }
 
-            // Salvataggio di saldo e statistiche nello stesso passaggio.
-            saveUsers(users);
+            usersChanged = true;
+        }
 
+        // Un unico salvataggio per tutti i giocatori.
+        if (usersChanged) {
+            saveUsers(users);
+        }
+
+        // Invia risultati e saldi aggiornati.
+        for (const userId of bets.keys()) {
             sendBet(userId);
             sendBalance(userId);
         }
@@ -231,13 +247,7 @@ function createRouletteEngine(sendToAll, sendToUser) {
         }
 
         const validTypes = [
-            'number',
-            'red',
-            'black',
-            'even',
-            'odd',
-            'low',
-            'high'
+            'number', 'red', 'black', 'even', 'odd', 'low', 'high'
         ];
 
         if (!validTypes.includes(selection.type)) {
@@ -268,7 +278,9 @@ function createRouletteEngine(sendToAll, sendToUser) {
         }
 
         const users = getUsers();
-        const user = users.find(u => u.id === userId);
+        const user = users.find(
+            u => String(u.id) === String(userId)
+        );
 
         if (!user || user.balance < amount) {
             return sendToUser(userId, {
@@ -277,9 +289,8 @@ function createRouletteEngine(sendToAll, sendToUser) {
             });
         }
 
-        // Sottrazione della puntata.
+        // Sottrae i crediti al momento della puntata.
         user.balance -= amount;
-
         saveUsers(users);
 
         bets.set(userId, {
@@ -290,7 +301,11 @@ function createRouletteEngine(sendToAll, sendToUser) {
         });
 
         sendBet(userId);
-        sendBalance(userId);
+
+        sendToUser(userId, {
+            type: 'balance',
+            balance: user.balance
+        });
     }
 
     function handleMessage(userId, message) {
