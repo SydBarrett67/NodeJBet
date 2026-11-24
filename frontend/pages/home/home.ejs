@@ -1,11 +1,115 @@
-<html>
+<!DOCTYPE html>
+<html lang="it">
 <head>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NodeJBet Casino</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
-
 <body>
 
+<nav class="navbar">
+    <a href="/" class="logo">NodeJBet<span>.</span></a>
 
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="#games">Giochi</a>
+        <a href="/login">Login</a>
+        <a href="/register" class="btn btn-primary">Registrati</a>
+    </div>
+</nav>
+
+<main class="container">
+
+    <section class="hero">
+        <div class="hero-content">
+
+            <h1>Il tuo prossimo<br>
+                <span class="gradient-text">livello di gioco.</span>
+            </h1>
+
+            <p>
+                Entra nel mondo NodeJBet. Gioca, sfida gli altri
+                utenti e scala le classifiche utilizzando
+                esclusivamente crediti virtuali.
+            </p>
+
+            <div class="hero-actions">
+                <a href="/register" class="btn btn-primary">
+                    Inizia a giocare
+                </a>
+                <a href="#games" class="btn btn-secondary">
+                    Scopri i giochi
+                </a>
+            </div>
+        </div>
+
+        <div class="hero-card">
+            <span class="muted">STARTING BALANCE</span>
+            <h2>10,000 <span class="coin">VC</span></h2>
+            <p>Crediti virtuali gratuiti</p>
+        </div>
+    </section>
+
+    <section id="games" class="section">
+        <div class="section-heading">
+            <div>
+                <span class="tag">GAME LIBRARY</span>
+                <h2>I nostri giochi</h2>
+            </div>
+            <span class="muted">Disponibili ora · 2 giochi</span>
+        </div>
+
+        <div class="game-grid">
+
+            <a href="/games/roulette" class="game-card">
+                <div class="game-info">
+                    <div>
+                        <h3>Roulette</h3>
+                        <p>La classica roulette europea.</p>
+                    </div>
+                    <span class="game-arrow">↗</span>
+                </div>
+            </a>
+
+            <a href="/games/aviator" class="game-card">
+                <div class="game-info">
+                    <div>
+                        <h3>Aviator</h3>
+                        <p>Segui il moltiplicatore e anticipa il crash.</p>
+                    </div>
+                    <span class="game-arrow">↗</span>
+                </div>
+            </a>
+
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>Realtime</h3>
+                <p>Partite e classifiche aggiornate in tempo reale.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>Leaderboard</h3>
+                <p>Competi con gli altri giocatori.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>Virtual credits</h3>
+                <p>Nessun denaro reale, solo crediti simulati.</p>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    NodeJBet CASINO © 2026
+</footer>
 
 </body>
 </html>
+

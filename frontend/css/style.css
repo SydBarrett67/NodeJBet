@@ -1,0 +1,714 @@
+:root {
+    --bg: #111111;
+    --surface: #1b1b1b;
+    --surface-hover: #242424;
+    --border: #303030;
+
+    --text: #ffffff;
+    --muted: #999999;
+
+    --green: #86d9a5;
+    --green-hover: #a0e5b8;
+
+    --red: #e66b6b;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button, input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+    box-shadow: none;
+}
+
+.container {
+    width: min(1100px, 92%);
+    margin: 0 auto;
+}
+
+.muted {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.tag {
+    color: var(--green);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* Buttons */
+
+.btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 11px 17px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: background .15s;
+}
+
+.btn-primary {
+    background: var(--green);
+    color: #111111;
+}
+
+.btn-primary:hover {
+    background: var(--green-hover);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--border);
+}
+
+.btn-secondary:hover {
+    background: var(--surface-hover);
+}
+
+.btn-full {
+    width: 100%;
+}
+
+/* Navbar */
+
+.navbar {
+    height: 68px;
+    border-bottom: 1px solid var(--border);
+    padding: 0 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: var(--text);
+}
+
+.logo span {
+    color: var(--green);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.nav-links a:hover {
+    color: var(--green);
+}
+
+/* Homepage */
+
+.hero {
+    min-height: 460px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 70px 0;
+}
+
+.hero-content {
+    max-width: 580px;
+}
+
+.hero h1 {
+    font-size: clamp(42px, 6vw, 65px);
+    line-height: 1.1;
+    margin: 20px 0;
+    letter-spacing: -2px;
+}
+
+.hero-content > p {
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 480px;
+    font-size: 14px;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+.hero-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 30px;
+    border-radius: 5px;
+    min-width: 270px;
+}
+
+.hero-card-icon {
+    font-size: 35px;
+    color: var(--green);
+    margin-bottom: 20px;
+}
+
+.hero-card h2 {
+    font-size: 32px;
+    margin: 15px 0 8px;
+}
+
+.coin {
+    font-size: 13px;
+    color: var(--green);
+}
+
+.section {
+    margin: 45px 0;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-heading h2 {
+    font-size: 21px;
+    margin-top: 6px;
+}
+
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.game-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    overflow: hidden;
+    transition: border-color .15s;
+}
+
+.game-card:hover {
+    border-color: var(--green);
+}
+
+.game-image {
+    height: 155px;
+    display: grid;
+    place-items: center;
+    font-size: 48px;
+    background: #202020;
+}
+
+.roulette-image,
+.aviator-image {
+    background: #202020;
+}
+
+.game-info {
+    padding: 17px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.game-info p {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 6px;
+}
+
+.game-arrow {
+    color: var(--green);
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.feature-card {
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    background: var(--surface);
+}
+
+.feature-card > span {
+    color: var(--green);
+    font-size: 22px;
+}
+
+.feature-card h3 {
+    margin: 13px 0 8px;
+}
+
+.feature-card p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+/* Authentication */
+
+.auth-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 15px;
+    position: relative;
+}
+
+.auth-logo {
+    position: absolute;
+    top: 30px;
+    left: 40px;
+}
+
+.auth-container {
+    width: min(400px, 92%);
+}
+
+.auth-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 30px;
+    border-radius: 5px;
+}
+
+.auth-card h1 {
+    font-size: 27px;
+    margin: 12px 0;
+}
+
+.auth-footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.auth-footer a {
+    color: var(--green);
+    font-weight: 600;
+}
+
+.back-link {
+    display: block;
+    text-align: center;
+    margin-top: 22px;
+    font-size: 12px;
+    color: var(--muted);
+}
+
+/* Forms */
+
+.form-group {
+    margin: 18px 0;
+}
+
+.form-group label,
+.input-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text);
+}
+
+.form-group input {
+    width: 100%;
+    height: 42px;
+    padding: 0 12px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--bg);
+    color: var(--text);
+    outline: none;
+}
+
+.form-group input::placeholder {
+    color: #777777;
+}
+
+.form-group input:focus {
+    border-color: var(--green);
+}
+
+/* Dashboard */
+
+.app-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 25px 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar .logo {
+    margin-bottom: 40px;
+}
+
+.sidebar-label {
+    font-size: 10px;
+    color: var(--muted);
+    margin: 18px 0 10px;
+    letter-spacing: 1px;
+}
+
+.sidebar-link {
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.sidebar-link:hover,
+.sidebar-link.active {
+    background: #29382f;
+    color: var(--green);
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--muted);
+}
+
+.dashboard-main {
+    flex: 1;
+    min-width: 0;
+    padding: 35px;
+}
+
+.dashboard-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    gap: 20px;
+}
+
+.dashboard-header h1 {
+    font-size: 25px;
+    margin-top: 8px;
+}
+
+.balance-box,
+.stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 18px;
+    border-radius: 5px;
+}
+
+.balance-box strong {
+    display: block;
+    color: var(--green);
+    font-size: 20px;
+    margin-top: 8px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.stat-card h2 {
+    font-size: 25px;
+    margin-top: 10px;
+}
+
+.green {
+    color: var(--green);
+}
+
+.placeholder-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 30px;
+    border-radius: 5px;
+    color: var(--muted);
+    text-align: center;
+}
+
+/* Games */
+
+.game-panel,
+.bet-panel,
+.aviator-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 22px;
+    border-radius: 5px;
+}
+
+.roulette-layout {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 15px;
+}
+
+.game-status,
+.aviator-topbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.countdown {
+    margin-left: auto;
+    color: var(--green);
+    font-size: 22px;
+}
+
+.live-indicator {
+    width: 8px;
+    height: 8px;
+    display: inline-block;
+    border-radius: 50%;
+    background: var(--green);
+}
+
+.roulette-wheel {
+    height: 250px;
+    display: grid;
+    place-items: center;
+}
+
+.wheel-placeholder {
+    width: 190px;
+    height: 190px;
+    border: 7px solid #303030;
+    background: #263f30;
+    color: var(--text);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.wheel-placeholder strong {
+    font-size: 28px;
+}
+
+.wheel-placeholder small {
+    font-size: 9px;
+    color: var(--muted);
+}
+
+.roulette-number {
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.roulette-number h2 {
+    font-size: 32px;
+    margin-top: 10px;
+}
+
+.bet-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin: 12px 0 20px;
+}
+
+.bet-option {
+    flex: 1;
+    min-width: 60px;
+    padding: 12px 6px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 11px;
+}
+
+.bet-option:focus {
+    border-color: var(--green);
+    color: var(--green);
+}
+
+.red-option {
+    background: #382326;
+    color: #f08b8b;
+}
+
+.black-option {
+    background: #252525;
+    color: var(--text);
+}
+
+.history-list,
+.player-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* Aviator */
+
+.aviator-game {
+    height: 330px;
+    background: #191f1b;
+    margin: 20px 0;
+    position: relative;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--border);
+}
+
+.flight-multiplier {
+    font-size: 65px;
+    font-weight: 700;
+    color: var(--green);
+}
+
+.plane {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: var(--green);
+}
+
+.flight-placeholder {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.aviator-controls {
+    display: flex;
+    align-items: end;
+    gap: 12px;
+}
+
+.aviator-controls .form-group {
+    flex: 1;
+}
+
+/* Footer */
+
+footer {
+    padding: 25px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+/* Responsive */
+
+@media (max-width: 750px) {
+    .hero-card {
+        display: none;
+    }
+
+    .sidebar {
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+        overflow-x: auto;
+        gap: 8px;
+    }
+
+    .sidebar .logo {
+        margin: 0;
+    }
+
+    .sidebar-label,
+    .sidebar-bottom {
+        display: none;
+    }
+
+    .app-layout {
+        flex-direction: column;
+    }
+
+    .dashboard-main {
+        padding: 20px 15px;
+    }
+
+    .roulette-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 500px) {
+    .game-grid,
+    .stats-grid,
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+        font-size: 40px;
+    }
+
+    .dashboard-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .aviator-controls {
+        flex-wrap: wrap;
+    }
+
+    .auth-logo {
+        position: static;
+        margin-bottom: 30px;
+    }
+
+    .auth-body {
+        flex-direction: column;
+    }
+}
