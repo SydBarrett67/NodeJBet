@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roulette | NodeJBet</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="/" class="logo">NodeJBet<span>.</span></a>
+    <div class="nav-links">
+        <a href="/dashboard">Dashboard</a>
+        <a href="/games/aviator">Aviator</a>
+        <form action="/logout" method="POST" style="display:inline;">
+            <button type="submit" class="btn btn-secondary">Esci</button>
+        </form>
+    </div>
+</nav>
+
+<main class="container">
+    <section class="hero">
+        <span class="tag">NODEJBET ORIGINAL</span>
+        <h1>Roulette<span class="gradient-text">.</span></h1>
+        <p class="muted">Scegli la tua puntata e prova la fortuna. Solo crediti virtuali.</p>
+    </section>
+
+    <section class="roulette-layout">
+
+        <div class="roulette-main">
+            <div class="roulette-table">
+                <div class="roulette-zero" data-number="0">0</div>
+                <div class="roulette-numbers" id="roulette-numbers"></div>
+            </div>
+
+            <div class="roulette-result">
+                <span class="muted" id="roulette-status">Puntate aperte</span>
+                <div class="roulette-result-number" id="result-number">?</div>
+                <p class="muted" id="roulette-message">Seleziona una puntata per iniziare.</p>
+                <div class="roulette-countdown" id="countdown">15</div>
+            </div>
+
+            <div class="roulette-history">
+                <h3>Ultimi risultati</h3>
+                <div id="roulette-history" class="roulette-history-list">
+                    <span class="muted">Nessun risultato</span>
+                </div>
+            </div>
+        </div>
+
+        <aside class="roulette-panel">
+            <div class="aviator-balance">
+                <span class="muted">Saldo disponibile</span>
+                <h2><span id="roulette-balance">0</span> <span class="gradient-text">NJ</span></h2>
+            </div>
+
+            <div class="form-group">
+                <label for="roulette-amount">Importo puntata</label>
+                <input type="number" id="roulette-amount" min="1" step="1" value="100">
+            </div>
+
+            <div class="bet-presets">
+                <button type="button" class="btn btn-secondary" data-amount="50">50</button>
+                <button type="button" class="btn btn-secondary" data-amount="100">100</button>
+                <button type="button" class="btn btn-secondary" data-amount="500">500</button>
+                <button type="button" class="btn btn-secondary" data-amount="1000">1000</button>
+            </div>
+
+            <div class="roulette-selection">
+                <label>Seleziona la puntata</label>
+                <div class="roulette-bet-options">
+                    <button type="button" class="roulette-option red" data-bet="red">Rosso</button>
+                    <button type="button" class="roulette-option black" data-bet="black">Nero</button>
+                    <button type="button" class="roulette-option" data-bet="even">Pari</button>
+                    <button type="button" class="roulette-option" data-bet="odd">Dispari</button>
+                    <button type="button" class="roulette-option" data-bet="low">1–18</button>
+                    <button type="button" class="roulette-option" data-bet="high">19–36</button>
+                </div>
+
+                <div class="form-group">
+                    <label for="roulette-number">Numero esatto (0–36)</label>
+                    <input type="number" id="roulette-number" min="0" max="36" placeholder="Facoltativo">
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-primary btn-full" id="roulette-play">
+                Piazza puntata
+            </button>
+
+            <div class="roulette-my-bet">
+                <span class="muted">La tua puntata</span>
+                <strong id="roulette-my-bet">Nessuna</strong>
+                <span class="muted" id="roulette-potential">Vincita potenziale: 0 NJ</span>
+            </div>
+
+            <p class="muted roulette-disclaimer">
+                Roulette dimostrativa. Nessun denaro reale.
+            </p>
+        </aside>
+    </section>
+</main>
+
+<footer class="footer">
+    <p class="muted">NodeJBet — Tutti i crediti sono virtuali.</p>
+</footer>
+
+<script src="/js/roulette.js"></script>
+</body>
+</html>
+

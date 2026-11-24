@@ -12,10 +12,30 @@
     <a href="/" class="logo">NodeJBet<span>.</span></a>
 
     <div class="nav-links">
+
         <a href="/">Home</a>
-        <a href="#games">Giochi</a>
-        <a href="/login">Login</a>
-        <a href="/register" class="btn btn-primary">Registrati</a>
+
+        <% if (currentUser) { %>
+
+            <a href="/dashboard">Dashboard</a>
+
+            <span class="muted">
+                Ciao, <%= currentUser.username %>
+            </span>
+
+            <form action="/logout" method="POST" style="display: inline;">
+                <button type="submit" class="btn btn-secondary">
+                    Esci
+                </button>
+            </form>
+
+        <% } else { %>
+
+            <a href="/login">Accedi</a>
+            <a href="/register" class="btn btn-primary">Registrati</a>
+
+        <% } %>
+
     </div>
 </nav>
 

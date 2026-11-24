@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrati | NodeJBet</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="auth-body">
+
+    <a href="/" class="logo auth-logo">
+        NodeJBet<span>.</span>
+    </a>
+
+    <main class="auth-container">
+
+        <section class="auth-card">
+
+            <span class="tag">CREATE ACCOUNT</span>
+
+            <h1>Registrati<span class="gradient-text">.</span></h1>
+
+            <p class="muted">
+                Crea il tuo account e inizia a giocare con crediti virtuali.
+            </p>
+
+            <% if (typeof error !== 'undefined' && error) { %>
+                <p style="color: var(--red); margin-top: 15px; font-size: 13px;">
+                    <%= error %>
+                </p>
+            <% } %>
+
+            <form action="/register" method="POST">
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="Scegli uno username"
+                        autocomplete="username"
+                        minlength="3"
+                        maxlength="20"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Inserisci la tua email"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Crea una password"
+                        autocomplete="new-password"
+                        minlength="8"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Conferma password</label>
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        placeholder="Ripeti la password"
+                        autocomplete="new-password"
+                        minlength="8"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-full">
+                    Crea account
+                </button>
+
+            </form>
+
+            <div class="auth-footer">
+                Hai già un account?
+                <a href="/login">Accedi</a>
+            </div>
+
+        </section>
+
+        <a href="/" class="back-link">← Torna alla homepage</a>
+
+    </main>
+
+</body>
+</html>
+

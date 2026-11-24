@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aviator | NodeJBet</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="/" class="logo">NodeJBet<span>.</span></a>
+
+        <div class="nav-links">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/games/roulette">Roulette</a>
+            <form action="/logout" method="POST" style="display:inline;">
+                <button type="submit" class="btn btn-secondary">Esci</button>
+            </form>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <section class="hero">
+            <span class="tag">NODEJBET ORIGINAL</span>
+            <h1>Aviator<span class="gradient-text">.</span></h1>
+            <p class="muted">
+                Segui il volo, osserva il moltiplicatore e incassa prima che sia troppo tardi.
+            </p>
+        </section>
+
+        <section class="aviator-game">
+
+            <!-- GAME SCREEN -->
+            <div class="aviator-screen">
+
+                <div class="aviator-top">
+                    <span class="tag">LIVE ROUND</span>
+                    <span class="muted" id="round-status">In attesa della partita</span>
+                </div>
+
+                <div class="aviator-center">
+                    <div class="aviator-multiplier" id="multiplier">
+                        1.00x
+                    </div>
+
+                    <div class="aviator-plane" id="plane">
+                        ✈
+                    </div>
+
+                    <p class="muted" id="game-message">
+                        Preparati al decollo!
+                    </p>
+                </div>
+
+                <div class="aviator-bottom">
+                    <span class="muted">ROUND #<span id="round-number">001</span></span>
+                    <span class="muted">Crediti virtuali</span>
+                </div>
+
+            </div>
+
+            <!-- CONTROL PANEL -->
+            <div class="aviator-controls">
+
+                <div class="aviator-balance">
+                    <span class="muted">Saldo disponibile</span>
+                    <h2>
+                        <span id="balance">10.000</span>
+                        <span class="gradient-text">NJ</span>
+                    </h2>
+                </div>
+
+                <div class="form-group">
+                    <label for="bet-amount">Importo puntata</label>
+                    <input
+                        type="number"
+                        id="bet-amount"
+                        min="1"
+                        step="1"
+                        value="100"
+                    >
+                </div>
+
+                <div class="bet-presets">
+                    <button type="button" class="btn btn-secondary" data-amount="50">50</button>
+                    <button type="button" class="btn btn-secondary" data-amount="100">100</button>
+                    <button type="button" class="btn btn-secondary" data-amount="500">500</button>
+                    <button type="button" class="btn btn-secondary" data-amount="1000">1000</button>
+                </div>
+
+                <button class="btn btn-primary btn-full" id="play-button">
+                    Gioca
+                </button>
+
+                <div class="aviator-info">
+                    <div>
+                        <span class="muted">Puntata attiva</span>
+                        <strong id="active-bet">0 NJ</strong>
+                    </div>
+
+                    <div>
+                        <span class="muted">Vincita potenziale</span>
+                        <strong id="potential-win" class="gradient-text">0 NJ</strong>
+                    </div>
+                </div>
+
+                <p class="muted aviator-disclaimer">
+                    Gioco dimostrativo con crediti virtuali. Nessun denaro reale.
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- HISTORY -->
+        <section class="section">
+            <h2>Ultimi round</h2>
+
+            <div class="aviator-history" id="history">
+                <p class="muted">Nessun round completato.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p class="muted">NodeJBet — Tutti i crediti sono virtuali.</p>
+    </footer>
+
+    <script src="/js/aviator.js"></script>
+
+</body>
+</html>
+

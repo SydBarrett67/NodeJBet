@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | NodeJBet</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="/" class="logo">NodeJBet<span>.</span></a>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/games/roulette">Roulette</a>
+            <a href="/games/aviator">Aviator</a>
+            <a href="/login" class="btn btn-secondary">Esci</a>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <section class="hero">
+            <span class="tag">PLAYER DASHBOARD</span>
+
+            <h1>
+                Bentornato,
+                <span class="gradient-text"><%= user.username %></span>
+            </h1>
+
+            <p class="muted">
+                Ecco un riepilogo della tua attività su NodeJBet.
+            </p>
+        </section>
+
+        <!-- BALANCE -->
+        <section class="dashboard-balance">
+            <div>
+                <span class="muted">Il tuo saldo virtuale</span>
+                <h2>
+                    <%= Number(user.balance).toLocaleString('it-IT') %>
+                    <span class="gradient-text">NJ</span>
+                </h2>
+                <p class="muted">Crediti virtuali, senza valore monetario reale.</p>
+            </div>
+
+            <div>
+                <span class="tag">VIRTUAL CREDITS</span>
+            </div>
+        </section>
+
+        <!-- STATISTICS -->
+        <section class="section">
+            <h2>Le tue statistiche</h2>
+
+            <div class="game-grid">
+
+                <div class="feature-card">
+                    <span class="muted">Partite giocate</span>
+                    <h2><%= user.gamesPlayed %></h2>
+                </div>
+
+                <div class="feature-card">
+                    <span class="muted">Partite vinte</span>
+                    <h2 class="gradient-text"><%= user.gamesWon %></h2>
+                </div>
+
+                <div class="feature-card">
+                    <span class="muted">Percentuale vittorie</span>
+                    <h2>
+                        <%= user.gamesPlayed > 0
+                            ? Math.round((user.gamesWon / user.gamesPlayed) * 100)
+                            : 0 %>%
+                    </h2>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- GAMES -->
+        <section class="section">
+            <h2>Continua a giocare</h2>
+
+            <div class="game-grid">
+
+                <div class="game-card">
+                    <span class="tag">CASUAL GAME</span>
+                    <h3>Roulette</h3>
+                    <p class="muted">
+                        Punta sui numeri e prova la tua fortuna alla roulette.
+                    </p>
+                    <a href="/games/roulette" class="btn btn-primary">
+                        Gioca ora
+                    </a>
+                </div>
+
+                <div class="game-card">
+                    <span class="tag">MULTIPLIER GAME</span>
+                    <h3>Aviator</h3>
+                    <p class="muted">
+                        Segui il moltiplicatore e ritira prima che l'aereo voli via.
+                    </p>
+                    <a href="/games/aviator" class="btn btn-primary">
+                        Gioca ora
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p class="muted">
+            NodeJBet — Progetto dimostrativo con crediti esclusivamente virtuali.
+        </p>
+    </footer>
+
+</body>
+</html>
+
